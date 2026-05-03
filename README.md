@@ -3,117 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galería Dinámica Pro</title>
+    <title>MUU Steak House - Experiencia Carnicería Premium</title>
     <style>
+        :root {
+            --primary-red: #d32f2f;
+            --dark-bg: #111111;
+            --card-bg: #1a1a1a;
+            --light-text: #ffffff;
+            --gold-accent: #d4af37;
+            --whatsapp-green: #25d366;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #1a1a1a;
+            font-family: 'Playfair Display', serif, 'Segoe UI', Arial;
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+        }
+
+        /* Banner de Descuento */
+        .promo-banner {
+            background-color: var(--primary-red);
             color: white;
+            padding: 15px 0;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.4rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Video Banner Header con Logo */
+        .video-header {
+            position: relative;
+            width: 100%;
+            height: 85vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 6px solid var(--primary-red);
+        }
+
+        .video-header iframe {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100vw;
+            height: 56.25vw;
+            min-height: 85vh;
+            min-width: 151vh;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
             display: flex;
             flex-direction: column;
+            justify-content: center;
             align-items: center;
-            margin: 0;
+            text-align: center;
+            z-index: 2;
             padding: 20px;
         }
 
-        h1 { margin-bottom: 30px; color: #f0f0f0; }
-
-        /* Contenedor de los 3 cuadros */
-        .gallery-container {
-            display: flex;
-            gap: 20px;
-            width: 90%;
-            max-width: 1000px;
-            justify-content: center;
+        .logo-header {
+            max-width: 250px;
+            height: auto;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.8));
         }
 
-        .photo-box {
-            flex: 1;
-            height: 300px;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-            border: 2px solid #333;
-            background: #000;
-            transition: all 0.5s ease-in-out;
-        }
-
-        .photo-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: transform 0.5s ease;
-        }
-
-        /* Estilo para los botones de control */
-        .controls { margin-top: 30px; }
-        button {
-            padding: 10px 20px;
-            cursor: pointer;
-            background: #e67e22;
-            border: none;
-            color: white;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-        button:hover { background: #d35400; }
-    </style>
-</head>
-<body>
-
-    <h1>Catálogo en Movimiento</h1>
-
-    <div class="gallery-container">
-        <div class="photo-box" id="box1"></div>
-        <div class="photo-box" id="box2"></div>
-        <div class="photo-box" id="box3"></div>
-    </div>
-
-    <div class="controls">
-        <button onclick="rotateGallery()">Rotar Manualmente</button>
-    </div>
-
-    <script>
-        // Array con los enlaces directos de tus fotos de ImgBB
-        const images = [
-            "https://i.ibb.co/9mWr3ZkT/IMG-20260424-WA0063.jpg",
-            "https://i.ibb.co/G4yT7zJS/IMG-20260424-WA0062.jpg",
-            "https://i.ibb.co/0R8JGDS3/IMG-20260424-WA0061.jpg",
-            "https://i.ibb.co/Wj1dpJc/IMG-20260424-WA0060.jpg",
-            "https://i.ibb.co/bRDv80QL/IMG-20260424-WA0058.jpg",
-            "https://i.ibb.co/nMXG041N/IMG-20260424-WA0059.jpg",
-            "https://i.ibb.co/Rp9zWcHT/IMG-20260424-WA0054.jpg",
-            "https://i.ibb.co/chF3j7Gk/IMG-20260424-WA0057.jpg",
-            "https://i.ibb.co/LdBY1RVB/IMG-20260424-WA0053.jpg",
-            "https://i.ibb.co/99xWhPdw/IMG-20260424-WA0047.jpg"
-        ];
-
-        let currentIndex = 0;
-
-        function updateGallery() {
-            // Calculamos los índices de las 3 fotos a mostrar
-            const idx1 = currentIndex % images.length;
-            const idx2 = (currentIndex + 1) % images.length;
-            const idx3 = (currentIndex + 2) % images.length;
-
-            // Insertamos las imágenes en los cuadros
-            document.getElementById('box1').innerHTML = `<img src="${images[idx1]}">`;
-            document.getElementById('box2').innerHTML = `<img src="${images[idx2]}">`;
-            document.getElementById('box3').innerHTML = `<img src="${images[idx3]}">`;
-        }
-
-        function rotateGallery() {
-            currentIndex++;
-            updateGallery();
-        }
-
-        // Iniciar la galería
-        updateGallery();
-
-        // Configurar rotación automática cada 3 segundos
-        setInterval(rotateGallery, 3000);
-    </script>
-</body>
-</html>
+        .video-overlay p {
+            font-size: 1.6rem;
+            max-width: 800px
+            
